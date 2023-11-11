@@ -96,7 +96,4 @@ public class ChatGptService {
 
     }
 
-    public void save_QA(String reponse){
-
-    }
 }
