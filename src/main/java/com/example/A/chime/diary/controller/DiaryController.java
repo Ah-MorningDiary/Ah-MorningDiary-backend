@@ -44,4 +44,13 @@ public class DiaryController {
 
         return ResponseEntity.ok().body(response);
     }
+
+
+    @DeleteMapping("/delete/{date}")
+    public ResponseEntity delete(@PathVariable("date") LocalDate date){
+        Member member = new Member();
+        DiaryResponse response = diaryService.delete(date,member);
+
+        return ResponseEntity.ok().body(response);
+    }
 }

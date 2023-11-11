@@ -55,7 +55,8 @@ public class DiaryService {
         DiaryResponse response = new DiaryResponse();
         member = memberRepository.findById("testId").get();
         Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
-        //TODO: 예외처리 어떻게 할지
+
+
         if(diary.isPresent()){
             Diary data = diary.get();
             data.setContext(request.getContext());
@@ -69,6 +70,25 @@ public class DiaryService {
         }
         else{
             response.setMessage("수정에 실패하였습니다.");
+        }
+
+        return response;
+    }
+
+
+    public DiaryResponse delete(LocalDate date, Member member){
+        DiaryResponse response = new DiaryResponse();
+        member = memberRepository.findById("testId").get();
+        Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
+
+
+        if(diary.isPresent()){
+            response.setDairyId(diary.get().getDiaryId());
+            dairyRepository.delete(diary.get());
+            response.setMessage("성공적으로 삭제하였습니다.");
+        }
+        else{
+            response.setMessage("삭제에 실패하였습니다.");
         }
 
         return response;
