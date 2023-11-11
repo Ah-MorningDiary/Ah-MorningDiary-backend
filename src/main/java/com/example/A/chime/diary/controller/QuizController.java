@@ -31,7 +31,7 @@ public class QuizController {
             return ResponseEntity.ok().body(response);
         }
         else if (number==1) {
-            //
+            QuizChoiceResponse response = quizService.whether_question(member);
         }
 
         return ResponseEntity.ok().body(null);
