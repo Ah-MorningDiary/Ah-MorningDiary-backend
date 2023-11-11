@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ResultController {
     private final AnswerService answerService;
 
-    @PostMapping("result")
+    @PostMapping("submit")
     public ResponseEntity result(@RequestBody SubmittedAnswerRequest request){
         Member member = new Member();
 
