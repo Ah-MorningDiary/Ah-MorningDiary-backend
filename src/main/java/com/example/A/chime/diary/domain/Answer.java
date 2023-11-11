@@ -14,6 +14,8 @@ public class Answer {
     @Id
     private Long questionId;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
     private String context;
+
 }
