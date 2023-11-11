@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//@IdClass(DiaryId.class)
 public class Diary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,8 @@ public class Diary {
     private String imgUrl;
     private LocalDate date;
     private Whether whether;
+
+    private boolean checked = false;
 
 
 }
