@@ -1,8 +1,6 @@
 package com.example.A.chime.diary.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +14,7 @@ public class Answer {
     @Id
     private Long questionId;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long answerId;
     private String context;
 
