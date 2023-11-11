@@ -25,6 +25,13 @@ public class DiaryService {
 
         member = memberRepository.findById(1L).get();
 
+        Optional<Diary> exist_diary = diaryRepository.findByMemberIdAndDate(member,LocalDate.now());
+
+        if (exist_diary.isPresent()){
+            response.setMessage("해당날짜에 이미 일기를 쓰셨습니다.");
+            return response;
+        }
+
         //TODO: 예외처리 고려
         diary.setMemberId(member);
         diary.setContext(request.getContext());
