@@ -27,7 +27,7 @@ public class QuizController {
         }
         else if (number==2 || number==4 || number==6) {
             Long randomValue = getRandomNumberInRange(1, 7);
-            QuizChoiceResponse response = quizService.get_quize(randomValue);
+            QuizChoiceResponse response = quizService.get_stored_quiz(randomValue);
             return ResponseEntity.ok().body(response);
         }
         else if (number==1) {
