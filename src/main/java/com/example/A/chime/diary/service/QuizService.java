@@ -63,28 +63,32 @@ public class QuizService {
         for (int i=1; i<input.length-1; i++){
             options.add(input[i]);
         }
-
+        //TODO: Question 엔티티에 정답 번호 저장쓰
         String answer = input[5];
         response.setQuestion(question);
         response.setOptions(options);
 
         return response;
     }
-    public QuizChoiceResponse get_quize(Long questionId) {
+    public QuizChoiceResponse get_stored_quiz(Long questionId) {
 
         QuizChoiceResponse response = new QuizChoiceResponse();
         Question question = questionRepository.findByQuestionId(questionId).get();
-        List<String> options = getOptionsForQuiz(question);
+        System.out.println(question.getContext());
+        List<String> options = getOptionsForQuiz(questionId);
+        System.out.println(options);
 
         response.setQuestion(question.getContext());
         response.setOptions(options);
+        response.setType(QType.CHOICE);
 
         return response;
     }
 
-    private List<String> getOptionsForQuiz(Question question) {
+    private List<String> getOptionsForQuiz(Long questionId) {
         List<String> options = new ArrayList<>();
-        List<Answer> answers = answerRepository.findByQuestionId(question);
+
+        List<Answer> answers = answerRepository.findByQuestionId(questionId);
         for (Answer answer : answers) {
             options.add(answer.getContext());
         }
