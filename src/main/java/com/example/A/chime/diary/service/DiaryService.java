@@ -5,7 +5,7 @@ import com.example.A.chime.diary.domain.Diary;
 import com.example.A.chime.diary.domain.Member;
 import com.example.A.chime.diary.dto.requestDto.DiaryRequest;
 import com.example.A.chime.diary.dto.responseDto.DiaryResponse;
-import com.example.A.chime.diary.repository.DairyRepository;
+import com.example.A.chime.diary.repository.DiaryRepository;
 import com.example.A.chime.diary.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class DiaryService {
-    private final DairyRepository dairyRepository;
+    private final DiaryRepository diaryRepository;
     private final MemberRepository memberRepository;
 
     public DiaryResponse create(DiaryRequest request, Member member){
@@ -32,7 +32,7 @@ public class DiaryService {
         diary.setWhether(request.getWhether());
         diary.setImgUrl(request.getImgUrl());
 
-        dairyRepository.save(diary);
+        diaryRepository.save(diary);
         response.setDairyId(diary.getDiaryId());
         response.setMessage("성공적으로 저장하였습니다.");
 
@@ -41,7 +41,7 @@ public class DiaryService {
 
     public Diary read(LocalDate date, Member member){
         member = memberRepository.findById(1L).get();
-        Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
+        Optional<Diary> diary = diaryRepository.findByMemberIdAndDate(member,date);
 
         //TODO: 예외처리 어떻게 할지
         if(diary.isPresent()){
@@ -54,7 +54,7 @@ public class DiaryService {
     public DiaryResponse update(DiaryRequest request, LocalDate date, Member member){
         DiaryResponse response = new DiaryResponse();
         member = memberRepository.findById(1L).get();
-        Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
+        Optional<Diary> diary = diaryRepository.findByMemberIdAndDate(member,date);
 
 
         if(diary.isPresent()){
@@ -63,7 +63,7 @@ public class DiaryService {
             data.setWhether(request.getWhether());
             data.setImgUrl(request.getImgUrl());
 
-            dairyRepository.save(data);
+            diaryRepository.save(data);
 
             response.setDairyId(data.getDiaryId());
             response.setMessage("성공적으로 수정하였습니다.");
@@ -79,12 +79,12 @@ public class DiaryService {
     public DiaryResponse delete(LocalDate date, Member member){
         DiaryResponse response = new DiaryResponse();
         member = memberRepository.findById(1L).get();
-        Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
+        Optional<Diary> diary = diaryRepository.findByMemberIdAndDate(member,date);
 
 
         if(diary.isPresent()){
             response.setDairyId(diary.get().getDiaryId());
-            dairyRepository.delete(diary.get());
+            diaryRepository.delete(diary.get());
             response.setMessage("성공적으로 삭제하였습니다.");
         }
         else{
