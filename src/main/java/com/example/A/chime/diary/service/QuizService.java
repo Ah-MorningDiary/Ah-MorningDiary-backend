@@ -1,17 +1,18 @@
 package com.example.A.chime.diary.service;
 
+import com.example.A.chime.diary.domain.Answer;
 import com.example.A.chime.diary.domain.Diary;
 import com.example.A.chime.diary.domain.Member;
+import com.example.A.chime.diary.domain.Question;
 import com.example.A.chime.diary.dto.responseDto.QuizChoiceResponse;
 import com.example.A.chime.diary.dto.responseDto.QuizOXResponse;
-import com.example.A.chime.diary.repository.DiaryRepository;
-import com.example.A.chime.diary.repository.MemberRepository;
-import com.example.A.chime.diary.repository.PromptRepository;
+import com.example.A.chime.diary.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,15 +23,15 @@ public class QuizService {
     private final MemberRepository memberRepository;
     private final ChatGptService chatGptService;
     private final PromptRepository promptRepository;
+    private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
 
     public QuizOXResponse generate_quizOX(LocalDate date, String diary){
         QuizOXResponse quizOXResponse = new QuizOXResponse();
-
         quizOXResponse = chatGptService.questionOX(diary);
-
-
         return quizOXResponse;
     }
+
 
 
     @Transactional
@@ -53,5 +54,26 @@ public class QuizService {
         return response;
 
     }
+    public QuizChoiceResponse get_quize(Long questionId) {
+
+        QuizChoiceResponse response = new QuizChoiceResponse();
+        Question question = questionRepository.findByQuestionId(questionId).get();
+        List<String> options = getOptionsForQuiz(question);
+
+        response.setQuestion(question.getContext());
+        response.setOptions(options);
+
+        return response;
+    }
+
+    private List<String> getOptionsForQuiz(Question question) {
+        List<String> options = new ArrayList<>();
+        List<Answer> answers = answerRepository.findByQuestionId(question);
+        for (Answer answer : answers) {
+            options.add(answer.getContext());
+        }
+        return options;
+    }
+
 
 }
