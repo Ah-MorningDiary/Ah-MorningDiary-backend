@@ -1,8 +1,8 @@
 package com.example.A.chime.diary.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.example.A.chime.diary.oauth.OAuthProvider;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
+
     @Id
-    private String memberId;
-    private String name;
-    private int age;
-    private Gender gender;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long memberId;
+    private String nickname;
+    @Enumerated(EnumType.STRING)
+    private OAuthProvider oAuthProvider;
 }

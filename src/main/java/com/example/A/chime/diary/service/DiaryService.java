@@ -23,7 +23,7 @@ public class DiaryService {
         DiaryResponse response = new DiaryResponse();
         Diary diary = new Diary();
 
-        member = memberRepository.findById("testId").get();
+        member = memberRepository.findById(1L).get();
 
         //TODO: 예외처리 고려
         diary.setMemberId(member);
@@ -40,7 +40,7 @@ public class DiaryService {
     }
 
     public Diary read(LocalDate date, Member member){
-        member = memberRepository.findById("testId").get();
+        member = memberRepository.findById(1L).get();
         Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
 
         //TODO: 예외처리 어떻게 할지
@@ -53,7 +53,7 @@ public class DiaryService {
 
     public DiaryResponse update(DiaryRequest request, LocalDate date, Member member){
         DiaryResponse response = new DiaryResponse();
-        member = memberRepository.findById("testId").get();
+        member = memberRepository.findById(1L).get();
         Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
 
 
@@ -78,7 +78,7 @@ public class DiaryService {
 
     public DiaryResponse delete(LocalDate date, Member member){
         DiaryResponse response = new DiaryResponse();
-        member = memberRepository.findById("testId").get();
+        member = memberRepository.findById(1L).get();
         Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
 
 
