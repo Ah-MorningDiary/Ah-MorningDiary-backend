@@ -33,7 +33,7 @@ public class DiaryService {
         diary.setImgUrl(request.getImgUrl());
 
         dairyRepository.save(diary);
-        response.setDairyId(diary.getDiaryId());
+        //TODO:diaryId를 어떻게 반환할지
         response.setMessage("성공적으로 저장하였습니다.");
 
         return response;
@@ -65,7 +65,7 @@ public class DiaryService {
 
             dairyRepository.save(data);
 
-            response.setDairyId(data.getDiaryId());
+            //TODO:diaryId를 어떻게 반환할지
             response.setMessage("성공적으로 수정하였습니다.");
         }
         else{
@@ -83,7 +83,7 @@ public class DiaryService {
 
 
         if(diary.isPresent()){
-            response.setDairyId(diary.get().getDiaryId());
+            //TODO:diaryId를 어떻게 반환할지
             dairyRepository.delete(diary.get());
             response.setMessage("성공적으로 삭제하였습니다.");
         }
