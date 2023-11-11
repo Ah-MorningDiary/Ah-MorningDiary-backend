@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ public class QuizService {
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
 
+
+    //TODO: 할꺼면 다른 클래스로 옮겨가자 ..
     public QuizOXResponse generate_quizOX(LocalDate date, String diary){
         QuizOXResponse quizOXResponse = new QuizOXResponse();
         quizOXResponse = chatGptService.questionOX(diary);
@@ -70,6 +73,7 @@ public class QuizService {
 
         return response;
     }
+
     public QuizChoiceResponse get_stored_quiz(Long questionId) {
 
         QuizChoiceResponse response = new QuizChoiceResponse();
@@ -93,6 +97,38 @@ public class QuizService {
             options.add(answer.getContext());
         }
         return options;
+    }
+
+    public QuizChoiceResponse whether_question(Member member){
+        QuizChoiceResponse response = new QuizChoiceResponse();
+
+        //TODO: 로그인된 사용자로 변경
+        member = memberRepository.findById(1L).get();
+        Optional<Diary> diary = diaryRepository.findAllByChecked(member.getMemberId());
+        String question = "날씨가 없습니다.";
+        List<String> options = new ArrayList<>();
+
+        if(diary.isPresent()){
+            LocalDate date = diary.get().getDate();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
+            String str = format.format(date);
+            question = str+ "의 날씨는 어떠했나요?";
+
+            options.add("맑음");
+            options.add("흐림");
+            options.add("눈");
+            options.add("비");
+
+            //TODO: question의 정답필드에 저장해야함
+            //answer = diary.get().getWhether();
+
+        }
+
+        response.setQuestion(question);
+        response.setOptions(options);
+        response.setType(QType.CHOICE);
+
+        return response;
     }
 
 
