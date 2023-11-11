@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +37,16 @@ public class DiaryService {
         response.setMessage("성공적으로 저장하였습니다.");
 
         return response;
+    }
+
+    public Diary read(LocalDate date, Member member){
+        member = memberRepository.findById("testId").get();
+        Optional<Diary> diary = dairyRepository.findByMemberIdAndDate(member,date);
+
+        //TODO: 예외처리 어떻게 할지
+        if(diary.isPresent()){
+
+        }
+        return diary.get();
     }
 }
