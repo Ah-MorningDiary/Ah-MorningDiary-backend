@@ -15,7 +15,7 @@ import java.util.Random;
 public class QuizController {
     private final QuizService quizService;
     //1. 퀴즈한개씩 가져오기
-    @GetMapping("/{num}")
+    @GetMapping("/{number}")
     public ResponseEntity get_quiz(@PathVariable("number") int number){
 
         Member member = new Member();
