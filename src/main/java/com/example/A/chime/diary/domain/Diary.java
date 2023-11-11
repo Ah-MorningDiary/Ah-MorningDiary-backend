@@ -12,16 +12,17 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(DiaryId.class)
 public class Diary {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long diaryId;
     @ManyToOne
     @JoinColumn(name="member_id")
     private Member memberId;
-    @Id
-    private LocalDate date;
+
     private String context;
     private String imgUrl;
+    private LocalDate date;
     private Whether whether;
 
 

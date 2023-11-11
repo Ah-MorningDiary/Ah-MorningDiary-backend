@@ -1,6 +1,9 @@
 package com.example.A.chime.diary.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,10 +17,7 @@ import java.time.LocalDate;
 public class Score {
     @Id
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name="member_id"),
-            @JoinColumn(name="date")
-    })
+    @JoinColumn(name="diary_id")
     private Diary diaryId;
     private int Qnum;
     private int Anum;
