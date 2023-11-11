@@ -1,6 +1,5 @@
 package com.example.A.chime.diary.domain;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -15,17 +14,13 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Diary {
+public class Score {
     @Id
-    private Long diaryId;
     @ManyToOne
-    @JoinColumn(name="member_id")
-    private Member memberId;
-
-    private String context;
-    private String imgUrl;
+    @JoinColumn(name="diary_id")
+    private Diary diaryId;
+    private int Qnum;
+    private int Anum;
+    private Status status;
     private LocalDate date;
-    private Whether whether;
-
-
 }

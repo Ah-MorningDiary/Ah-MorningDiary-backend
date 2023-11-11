@@ -1,20 +1,16 @@
 package com.example.A.chime.diary.domain;
 
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
-    @Id
-    private String memberId;
-    private String name;
-    private int age;
-    private Gender gender;
+public class AnswerId implements Serializable {
+    private Long questionId;
+    private Long answerId;
 }

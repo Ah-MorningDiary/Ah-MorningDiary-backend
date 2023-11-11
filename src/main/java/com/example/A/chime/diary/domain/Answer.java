@@ -1,8 +1,8 @@
 package com.example.A.chime.diary.domain;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+@IdClass(AnswerId.class)
+public class Answer {
     @Id
-    private String memberId;
-    private String name;
-    private int age;
-    private Gender gender;
+    private Long questionId;
+    @Id
+    private Long answerId;
+    private String context;
+
 }

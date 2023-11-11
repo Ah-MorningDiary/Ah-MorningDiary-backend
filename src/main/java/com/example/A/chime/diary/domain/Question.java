@@ -1,6 +1,5 @@
 package com.example.A.chime.diary.domain;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -11,10 +10,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+public class Question {
     @Id
-    private String memberId;
-    private String name;
-    private int age;
-    private Gender gender;
+    private Long questionId;
+    private Long dairyId;
+    private String Context;
+    private QType qType;
+    private Category category;
+    private int answer;
+
 }
