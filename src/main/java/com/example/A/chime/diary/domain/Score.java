@@ -1,9 +1,6 @@
 package com.example.A.chime.diary.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,11 +13,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Score {
     @Id
-    @ManyToOne
-    @JoinColumn(name="diary_id")
-    private Diary diaryId;
-    private int Qnum;
-    private int Anum;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long Id;
+    private Long diaryId;
+
+    private Long memberId;
+    private int Qnum = 6;
+    private int Anum;//맞은 문제수
     private Status status;
-    private LocalDate date;
+    private LocalDate date;//푼 날짜
 }
