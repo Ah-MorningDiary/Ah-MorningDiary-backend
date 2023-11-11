@@ -83,7 +83,7 @@ public class ChatGptService {
         //response 파싱
         Map<String,Object> result = responseEntity.getBody();
 
-        System.out.println(result);
+        //System.out.println(result);
         assert result != null; //여기 예외처리 필요
         @SuppressWarnings("unchecked")
         ArrayList<Map<String,Object>> jsonArray = (ArrayList<Map<String,Object>>)result.get("choices");
@@ -92,8 +92,6 @@ public class ChatGptService {
 
 
         response.setQuestion(String.valueOf(jsonObject.get("content")));
-
-
         return String.valueOf(jsonObject.get("content"));
 
     }

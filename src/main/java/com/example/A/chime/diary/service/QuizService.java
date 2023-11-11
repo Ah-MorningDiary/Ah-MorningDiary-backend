@@ -1,9 +1,6 @@
 package com.example.A.chime.diary.service;
 
-import com.example.A.chime.diary.domain.Answer;
-import com.example.A.chime.diary.domain.Diary;
-import com.example.A.chime.diary.domain.Member;
-import com.example.A.chime.diary.domain.Question;
+import com.example.A.chime.diary.domain.*;
 import com.example.A.chime.diary.dto.responseDto.QuizChoiceResponse;
 import com.example.A.chime.diary.dto.responseDto.QuizOXResponse;
 import com.example.A.chime.diary.repository.*;
@@ -38,7 +35,7 @@ public class QuizService {
     public QuizChoiceResponse generate_quizChoice(Member member){
         //피료없는거 ...
         //Optional<Diary> diary = diaryRepository.findByMemberIdAndDate(member,date);
-        QuizChoiceResponse response = new QuizChoiceResponse();
+
 
         //TODO: date-checked=flase인 가장 최근일기 , member-현재 사용자의 member
         member = memberRepository.findById(1L).get();
@@ -48,11 +45,30 @@ public class QuizService {
         System.out.println(prompt);
         String quiz = chatGptService.questionChoice(prompt);
 
-        System.out.println(quiz);
-        response.setQuestion(quiz);
+        QuizChoiceResponse response = parse_dto(quiz);
+        //response.setQuestion(quiz);
+        response.setType(QType.CHOICE);
 
         return response;
 
+    }
+
+
+    public QuizChoiceResponse parse_dto(String quiz){
+        QuizChoiceResponse response = new QuizChoiceResponse();
+        List<String> options = new ArrayList<>();
+        String[] input = quiz.split("\n");
+        String question = input[0].replace("질문","");
+
+        for (int i=1; i<input.length-1; i++){
+            options.add(input[i]);
+        }
+
+        String answer = input[5];
+        response.setQuestion(question);
+        response.setOptions(options);
+
+        return response;
     }
     public QuizChoiceResponse get_quize(Long questionId) {
 
