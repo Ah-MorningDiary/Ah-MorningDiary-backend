@@ -25,6 +25,7 @@ public class QuizService {
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
     private final AnswerService answerService;
+    private final HistoryRepository historyRepository;
 
 
     //TODO: 할꺼면 다른 클래스로 옮겨가자 ..
@@ -55,6 +56,7 @@ public class QuizService {
 
 
         System.out.println(quiz);
+
         response.setType(QType.CHOICE);
 
         return response;
@@ -85,7 +87,7 @@ public class QuizService {
         response.setOptions(options);
 
         Long questionId = questionService.save_question(diary.getDiaryId(), response,answer);
-
+        response.setQuestionId(questionId);
         //save_answer
         answerService.save_answer(response.getOptions(),questionId);
 
@@ -106,6 +108,7 @@ public class QuizService {
         response.setQuestion(question.getContext());
         response.setOptions(options);
         response.setType(QType.CHOICE);
+        response.setQuestionId(questionId);
 
         return response;
     }
@@ -134,9 +137,8 @@ public class QuizService {
 
         if(diary.isPresent()){
             LocalDate date = diary.get().getDate();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
-            String str = format.format(date);
-            question = str+ "의 날씨는 어떠했나요?";
+
+            question = date.toString()+ "의 날씨는 어떠했나요?";
 
             options.add("맑음");
             options.add("흐림");
@@ -151,6 +153,7 @@ public class QuizService {
         response.setQuestion(question);
         response.setOptions(options);
         response.setType(QType.CHOICE);
+        //response.setQuestionId(null);
 
         return response;
     }

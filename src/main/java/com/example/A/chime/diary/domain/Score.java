@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 @Entity
 @Data
@@ -14,7 +15,6 @@ import java.time.LocalDate;
 public class Score {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long Id;
     private Long diaryId;
 

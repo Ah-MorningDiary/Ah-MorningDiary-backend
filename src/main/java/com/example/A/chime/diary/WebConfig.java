@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://127.0.0.1:5173","http://127.0.0.1:3000","http://localhost:3000","http://localhost:5173") // 요청하는 쪽 origin
+                .allowedOrigins("http://127.0.0.1:5173","http://127.0.0.1:3000","http://localhost:3000","http://localhost:5173","https://v1--ah-diarymorning.netlify.app","http://43.202.147.59") // 요청하는 쪽 origin
                 .allowedMethods("*") // http 모든 메소드 요청 허용
                 .allowedHeaders("*") // 헤더 정보 모두 허용
                 .allowCredentials(true) ;// 쿠키, 세션 정보도 허용

@@ -21,9 +21,14 @@ public class StartController {
     private final MemberService memberService;
 
     @GetMapping("start")
+
     public ResponseEntity start(@RequestHeader("Authorization") String accessToken){
         Member member = memberService.findMember(accessToken);
         boolean result = startService.start(member);
-        return ResponseEntity.ok().body(result);
+
+//     public ResponseEntity start(){
+//         Member member = new Member();
+//         //boolean result = startService.start(member);
+//         return ResponseEntity.ok().body(true);
     }
 }
