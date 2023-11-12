@@ -8,12 +8,14 @@ import com.example.A.chime.diary.dto.responseDto.DiaryResponse;
 import com.example.A.chime.diary.repository.DiaryRepository;
 import com.example.A.chime.diary.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class DiaryService {
     private final DiaryRepository diaryRepository;
@@ -23,7 +25,7 @@ public class DiaryService {
         DiaryResponse response = new DiaryResponse();
         Diary diary = new Diary();
 
-        member = memberRepository.findById(1L).get();
+        member = memberRepository.findById(member.getMemberId()).get();
 
         Optional<Diary> exist_diary = diaryRepository.findByMemberIdAndDate(member,LocalDate.now());
 
@@ -46,6 +48,7 @@ public class DiaryService {
         return response;
     }
 
+
     public Diary read(LocalDate date, Member member){
         member = memberRepository.findById(1L).get();
         Optional<Diary> diary = diaryRepository.findByMemberIdAndDate(member,date);
@@ -60,7 +63,7 @@ public class DiaryService {
 
     public DiaryResponse update(DiaryRequest request, LocalDate date, Member member){
         DiaryResponse response = new DiaryResponse();
-        member = memberRepository.findById(1L).get();
+        member = memberRepository.findById(member.getMemberId()).get();
         Optional<Diary> diary = diaryRepository.findByMemberIdAndDate(member,date);
 
 
@@ -85,7 +88,7 @@ public class DiaryService {
 
     public DiaryResponse delete(LocalDate date, Member member){
         DiaryResponse response = new DiaryResponse();
-        member = memberRepository.findById(1L).get();
+        member = memberRepository.findById(member.getMemberId()).get();
         Optional<Diary> diary = diaryRepository.findByMemberIdAndDate(member,date);
 
 
