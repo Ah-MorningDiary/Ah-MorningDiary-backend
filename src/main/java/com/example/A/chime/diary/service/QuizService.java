@@ -136,9 +136,8 @@ public class QuizService {
 
         if(diary.isPresent()){
             LocalDate date = diary.get().getDate();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
-            String str = format.format(date);
-            question = str+ "의 날씨는 어떠했나요?";
+
+            question = date.toString()+ "의 날씨는 어떠했나요?";
 
             options.add("맑음");
             options.add("흐림");
