@@ -50,7 +50,7 @@ public class DiaryService {
 
 
     public Diary read(LocalDate date, Member member){
-        member = memberRepository.findById(1L).get();
+        member = memberRepository.findById(member.getMemberId()).get();
         Optional<Diary> diary = diaryRepository.findByMemberIdAndDate(member,date);
 
         //TODO: 예외처리 어떻게 할지
