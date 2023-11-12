@@ -6,7 +6,9 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -17,5 +19,7 @@ public class History {
     @Id
     private Long historyId;
     private Long MemberId;
-    private List<Long> question_list;
+    private LocalDate date;
+
+
 }
