@@ -77,14 +77,13 @@ public class MemberService {
 
         KakaoProfile profile = findProfile(token);
 
-        //(2)
-        Member member = memberRepository.findByMemberId((profile.getId()));
+        Member member = memberRepository.findByMemberId(profile.getId());
 
-        //(3)
         if(member == null) {
             member = member.builder()
                     .memberId(profile.getId())
                     .nickName(profile.getKakao_account().getProfile().getNickname())
+                    .accessToken(token)
                     .build();
             //(5)
             memberRepository.save(member);
@@ -127,5 +126,7 @@ public class MemberService {
     }
 
 
-
+    public Member findMember(String accessToken) {
+        return memberRepository.findByAccessToken(accessToken);
+    }
 }
