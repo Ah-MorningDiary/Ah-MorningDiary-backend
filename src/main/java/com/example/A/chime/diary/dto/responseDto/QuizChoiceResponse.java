@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class QuizChoiceResponse {
+    private Long questionId;
     private QType type;
     public String question;
     private List<String> options;
