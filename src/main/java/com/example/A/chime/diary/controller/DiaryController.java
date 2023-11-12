@@ -22,8 +22,8 @@ public class DiaryController {
 
 
     @PostMapping("/create")
-    public ResponseEntity create(@RequestBody DiaryRequest request){
-        Member member = new Member();
+    public ResponseEntity create(@RequestBody DiaryRequest request, @RequestHeader("Authorization") String accessToken){
+        Member member = memberService.findMember(accessToken);
         DiaryResponse response = diaryService.create(request,member);
 
         return ResponseEntity.ok().body(response);

@@ -45,6 +45,14 @@ public class KoauthController{
                 .maxAge(3600)
                 .build();
 
-        response.addHeader("Set-Cookie", cookie.toString());
+        response.addHeader("Authorization", cookie.toString());
+
+//        Cookie cookie = new Cookie("Authorization", accessToken);
+//        cookie.setMaxAge(3600);
+//        cookie.setPath("/");
+//
+//        response.addCookie(cookie);
+
+
     }
 }
