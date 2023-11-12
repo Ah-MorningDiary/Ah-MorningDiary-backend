@@ -23,6 +23,8 @@ public class QuizService {
     private final PromptRepository promptRepository;
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private final QuestionService questionService;
+    private final AnswerService answerService;
 
 
     //TODO: 할꺼면 다른 클래스로 옮겨가자 ..
@@ -34,6 +36,7 @@ public class QuizService {
 
 
 
+    // 퀴즈로 만들어야 할 일기 찾고 gpt호출하는 함수
     @Transactional
     public QuizChoiceResponse generate_quizChoice(Member member){
         //피료없는거 ...
@@ -45,11 +48,13 @@ public class QuizService {
         Optional<Diary> diary = diaryRepository.findAllByChecked(member.getMemberId());
         String prompt = promptRepository.findById(1L).get().getContext();
         prompt = diary.get().getContext()+"\n\n"+prompt;
-        System.out.println(prompt);
+        //
         String quiz = chatGptService.questionChoice(prompt);
 
-        QuizChoiceResponse response = parse_dto(quiz);
-        //response.setQuestion(quiz);
+        QuizChoiceResponse response = parse_dto(quiz,diary.get());
+
+
+        System.out.println(quiz);
         response.setType(QType.CHOICE);
 
         return response;
@@ -57,22 +62,38 @@ public class QuizService {
     }
 
 
-    public QuizChoiceResponse parse_dto(String quiz){
+
+    //질문, 선택지 파싱해 response에 돌려주는 함수
+    public QuizChoiceResponse parse_dto(String quiz,Diary diary){
         QuizChoiceResponse response = new QuizChoiceResponse();
         List<String> options = new ArrayList<>();
         String[] input = quiz.split("\n");
         String question = input[0].replace("질문","");
 
+        int a=1;
         for (int i=1; i<input.length-1; i++){
-            options.add(input[i]);
+            if (!input[i].isEmpty()){
+                options.add(input[a]);
+                a+=1;
+            }
+
         }
+
         //TODO: Question 엔티티에 정답 번호 저장쓰
-        String answer = input[5];
+        String answer = input[input.length-1].replace("정답","");
         response.setQuestion(question);
         response.setOptions(options);
 
+        Long questionId = questionService.save_question(diary.getDiaryId(), response,answer);
+
+        //save_answer
+        answerService.save_answer(response.getOptions(),questionId);
+
         return response;
     }
+
+
+
 
     public QuizChoiceResponse get_stored_quiz(Long questionId) {
 
@@ -88,6 +109,8 @@ public class QuizService {
 
         return response;
     }
+
+
 
     private List<String> getOptionsForQuiz(Long questionId) {
         List<String> options = new ArrayList<>();

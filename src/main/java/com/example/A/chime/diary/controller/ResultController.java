@@ -2,9 +2,8 @@ package com.example.A.chime.diary.controller;
 
 import com.example.A.chime.diary.domain.Member;
 import com.example.A.chime.diary.dto.requestDto.SubmittedAnswerRequest;
-import com.example.A.chime.diary.service.AnswerService;
+import com.example.A.chime.diary.service.ScoreService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("quiz")
 @RequiredArgsConstructor
 public class ResultController {
-    private final AnswerService answerService;
+    private final ScoreService scoreService;
 
     @PostMapping("submit")
     public ResponseEntity result(@RequestBody SubmittedAnswerRequest request){
         Member member = new Member();
 
-        String response = answerService.submit(request,member);
+        String response = scoreService.submit(request,member);
         return ResponseEntity.ok().body(response);
     }
 }

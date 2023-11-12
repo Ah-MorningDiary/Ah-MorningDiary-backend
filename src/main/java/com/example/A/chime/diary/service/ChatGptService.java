@@ -33,7 +33,7 @@ public class ChatGptService {
         List<Message> messages = new ArrayList<>();
         messages.add(new Message("user", diary));
         request.setMessages(messages);
-        request.setMaxTokens(100);
+        request.setMaxTokens(200);
         request.setTemperature(1.0);
         request.setTopP(1.0);
 
@@ -71,7 +71,7 @@ public class ChatGptService {
         List<Message> messages = new ArrayList<>();
         messages.add(new Message("user", diary));
         request.setMessages(messages);
-        request.setMaxTokens(100);
+        request.setMaxTokens(200);
         request.setTemperature(1.0);
         request.setTopP(1.0);
 
