@@ -10,17 +10,18 @@ import com.example.A.chime.diary.repository.ScoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AnswerService {
+public class ScoreService {
     private final MemberRepository memberRepository;
     private final QuestionRepository questionRepository;
     private final ScoreRepository scoreRepository;
     private final DiaryRepository diaryRepository;
+
+    //summit 호출시 diary의 checked-true로 고쳐야함
 
     public String submit(SubmittedAnswerRequest request, Member member){
         //memberRepository.findById(member.getMemberId());

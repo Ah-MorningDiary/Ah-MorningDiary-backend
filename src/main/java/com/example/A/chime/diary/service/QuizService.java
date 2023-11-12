@@ -23,6 +23,7 @@ public class QuizService {
     private final PromptRepository promptRepository;
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
+    private final QuestionService questionService;
 
 
     //TODO: 할꺼면 다른 클래스로 옮겨가자 ..
@@ -34,6 +35,7 @@ public class QuizService {
 
 
 
+    // 퀴즈로 만들어야 할 일기 찾고 gpt호출하는 함수
     @Transactional
     public QuizChoiceResponse generate_quizChoice(Member member){
         //피료없는거 ...
@@ -48,7 +50,10 @@ public class QuizService {
         System.out.println(prompt);
         String quiz = chatGptService.questionChoice(prompt);
 
-        QuizChoiceResponse response = parse_dto(quiz);
+        QuizChoiceResponse response = parse_dto(quiz,diary.get());
+
+
+
         //response.setQuestion(quiz);
         response.setType(QType.CHOICE);
 
@@ -57,7 +62,9 @@ public class QuizService {
     }
 
 
-    public QuizChoiceResponse parse_dto(String quiz){
+
+    //질문, 선택지 파싱해 response에 돌려주는 함수
+    public QuizChoiceResponse parse_dto(String quiz,Diary diary){
         QuizChoiceResponse response = new QuizChoiceResponse();
         List<String> options = new ArrayList<>();
         String[] input = quiz.split("\n");
@@ -67,12 +74,17 @@ public class QuizService {
             options.add(input[i]);
         }
         //TODO: Question 엔티티에 정답 번호 저장쓰
-        String answer = input[5];
+        String answer = input[input.length-1];
         response.setQuestion(question);
         response.setOptions(options);
 
+        Long questionId = questionService.save_question(diary.getDiaryId(), response,answer);
+
         return response;
     }
+
+
+
 
     public QuizChoiceResponse get_stored_quiz(Long questionId) {
 
@@ -88,6 +100,8 @@ public class QuizService {
 
         return response;
     }
+
+
 
     private List<String> getOptionsForQuiz(Long questionId) {
         List<String> options = new ArrayList<>();
