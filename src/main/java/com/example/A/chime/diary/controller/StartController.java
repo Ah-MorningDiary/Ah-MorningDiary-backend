@@ -20,7 +20,7 @@ public class StartController {
     @GetMapping("start")
     public ResponseEntity start(){
         Member member = new Member();
-        boolean result = startService.start(member);
-        return ResponseEntity.ok().body(result);
+        //boolean result = startService.start(member);
+        return ResponseEntity.ok().body(true);
     }
 }

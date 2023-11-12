@@ -14,7 +14,6 @@ import java.time.LocalDate;
 public class Score {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long Id;
     private Long diaryId;
 
