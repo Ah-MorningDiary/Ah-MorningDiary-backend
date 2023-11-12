@@ -19,22 +19,25 @@ public class QuizController {
     public ResponseEntity get_quiz(@PathVariable("number") int number){
 
         Member member = new Member();
+        QuizChoiceResponse response;
 
         // 1--> 날씨 묻는 퀴즈, 3,5--> 일기기반 2,4,6--> 저장된 퀴즈
         if(number==3 || number==5){
-            QuizChoiceResponse response = quizService.generate_quizChoice(member);
+            response = quizService.generate_quizChoice(member);
             return ResponseEntity.ok().body(response);
         }
         else if (number==2 || number==4 || number==6) {
             Long randomValue = getRandomNumberInRange(1, 7);
-            QuizChoiceResponse response = quizService.get_stored_quiz(randomValue);
+            response = quizService.get_stored_quiz(randomValue);
             return ResponseEntity.ok().body(response);
         }
         else if (number==1) {
-            QuizChoiceResponse response = quizService.whether_question(member);
+            response = quizService.whether_question(member);
+            return ResponseEntity.ok().body(response);
         }
-
         return ResponseEntity.ok().body(null);
+
+
     }
 
 
