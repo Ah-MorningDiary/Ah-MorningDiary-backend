@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class KoauthController{
 
     @PostMapping("/{code}")
     //ResponseEntity<String>
-    public void getLoing(@PathVariable("code") String code, HttpServletResponse response){
+    public void getLoing(@PathVariable("code") String code, HttpServletResponse response) {
         //access code로 access token 발급
 
         OauthToken oauthToken = memberService.getAccessToken(code);
@@ -37,11 +38,13 @@ public class KoauthController{
         Member member = memberService.saveMember(oauthToken.getAccess_token());
 
         //쿠키
-        Cookie cookie = new Cookie("Authorization", accessToken);
-        cookie.setMaxAge(3600);
-        cookie.setPath("/");
+        ResponseCookie cookie = ResponseCookie.from("Authorization", accessToken)
+                .path("/")
+                .sameSite("None")
+                .secure(false)
+                .maxAge(3600)
+                .build();
 
-        response.addCookie(cookie);
-        //return new ResponseEntity<>(response, HttpStatus.OK);
+        response.addHeader("Set-Cookie", cookie.toString());
     }
 }
