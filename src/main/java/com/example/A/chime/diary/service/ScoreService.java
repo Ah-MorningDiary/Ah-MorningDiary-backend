@@ -26,13 +26,13 @@ public class ScoreService {
     public String submit(SubmittedAnswerRequest request, Member member){
         //memberRepository.findById(member.getMemberId());
         //TODO:member 맵핑
-        Member member1 = memberRepository.findById(1L).get();
+        member = memberRepository.findById(member.getMemberId()).get();
         LocalDate date = LocalDate.now();
         Long diary_id=0L;
         Score score = new Score();
         score.setAnum(0);
         score.setDate(date);
-        score.setMemberId(member1.getMemberId());
+        score.setMemberId(member.getMemberId());
 
 
         for (int i=0; i<6;i++){

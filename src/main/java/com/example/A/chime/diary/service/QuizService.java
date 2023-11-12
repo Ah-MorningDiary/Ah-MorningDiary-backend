@@ -44,7 +44,7 @@ public class QuizService {
 
 
         //TODO: date-checked=flase인 가장 최근일기 , member-현재 사용자의 member
-        member = memberRepository.findById(1L).get();
+        member = memberRepository.findById(member.getMemberId()).get();
         Optional<Diary> diary = diaryRepository.findAllByChecked(member.getMemberId());
         String prompt = promptRepository.findById(1L).get().getContext();
         prompt = diary.get().getContext()+"\n\n"+prompt;
@@ -125,8 +125,9 @@ public class QuizService {
     public QuizChoiceResponse whether_question(Member member){
         QuizChoiceResponse response = new QuizChoiceResponse();
 
-        //TODO: 로그인된 사용자로 변경
-        member = memberRepository.findById(1L).get();
+
+        member = memberRepository.findById(member.getMemberId()).get();
+
         Optional<Diary> diary = diaryRepository.findAllByChecked(member.getMemberId());
         String question = "날씨가 없습니다.";
         List<String> options = new ArrayList<>();

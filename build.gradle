@@ -31,7 +31,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	runtimeOnly 'com.h2database:h2'
-	implementation 'jakarta.servlet:jakarta.api:3.1.0'
 }
 
 tasks.named('test') {

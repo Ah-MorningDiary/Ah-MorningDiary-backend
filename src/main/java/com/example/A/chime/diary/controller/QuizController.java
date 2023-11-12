@@ -2,6 +2,7 @@ package com.example.A.chime.diary.controller;
 
 import com.example.A.chime.diary.domain.Member;
 import com.example.A.chime.diary.dto.responseDto.QuizChoiceResponse;
+import com.example.A.chime.diary.service.MemberService;
 import com.example.A.chime.diary.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,13 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class QuizController {
     private final QuizService quizService;
+    private final MemberService memberService;
+
     //1. 퀴즈한개씩 가져오기
     @GetMapping("/{number}")
-    public ResponseEntity get_quiz(@PathVariable("number") int number){
+    public ResponseEntity get_quiz(@PathVariable("number") int number, @RequestHeader("Authorization") String accessToken){
 
-        Member member = new Member();
+        Member member = memberService.findMember(accessToken);
 
         // 1--> 날씨 묻는 퀴즈, 3,5--> 일기기반 2,4,6--> 저장된 퀴즈
         if(number==3 || number==5){
