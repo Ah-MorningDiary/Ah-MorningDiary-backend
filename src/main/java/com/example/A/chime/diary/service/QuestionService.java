@@ -1,6 +1,7 @@
 package com.example.A.chime.diary.service;
 
 import com.example.A.chime.diary.domain.Category;
+import com.example.A.chime.diary.domain.QType;
 import com.example.A.chime.diary.domain.Question;
 import com.example.A.chime.diary.dto.responseDto.QuizChoiceResponse;
 import com.example.A.chime.diary.repository.DiaryRepository;
@@ -32,6 +33,7 @@ public class QuestionService {
         }
 
         question.setAnswer(ans);
+        question.setQType(QType.CHOICE);
         questionRepository.save(question);
 
         return question.getQuestionId();
